@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Harsh Dishant V1</title>
+    <title>Harsh Dishant V2</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -51,15 +51,11 @@
             font-size: 30px;
             font-weight: bold;
         }
-        .win { color: green; }
-        .loss { color: red; }
-        .pending { color: yellow; }
         .history-item {
             padding: 10px;
             margin: 5px 0;
             background: rgba(255, 255, 255, 0.2);
             border-radius: 5px;
-            transition: transform 0.3s ease-in-out, opacity 0.3s;
         }
     </style>
 </head>
@@ -67,7 +63,7 @@
 
 <!-- Home Page -->
 <div class="container" id="homePage">
-    <h1>Welcome to Harsh Dishant V1</h1>
+    <h1>Welcome to Harsh Dishant V2</h1>
     <button class="btn" onclick="openMode('calculation')">Calculation Mode</button>
     <button class="btn" onclick="openMode('api')">API Calculation Mode</button>
 </div>
@@ -80,7 +76,6 @@
     <div class="box">
         Wins: <span id="totalWins">0</span> | Losses: <span id="totalLosses">0</span> | Accuracy: <span id="accuracy">0%</span>
     </div>
-    <div class="box">Auto Reverse: <span id="autoReverseStatus">OFF</span></div>
     <h3>History</h3>
     <button class="btn" onclick="clearHistory()">Clear History</button>
     <button class="btn" onclick="goBack()">Back to Home</button>
@@ -90,7 +85,6 @@
 <script>
     let mode = "";
     let historyData = JSON.parse(localStorage.getItem("predictionHistory")) || [];
-    let autoReverse = false;
     let latestPeriod = 0;
 
     function openMode(selectedMode) {
@@ -172,15 +166,8 @@
         }
 
         localStorage.setItem("predictionHistory", JSON.stringify(historyData));
-        activateAutoReverse();
         updateWinLossAccuracy();
         updateUI();
-    }
-
-    function activateAutoReverse() {
-        let losses = historyData.slice(0, 2).filter(h => h.resultStatus === "LOSS").length;
-        autoReverse = losses >= 2;
-        document.getElementById("autoReverseStatus").innerText = autoReverse ? "ON" : "OFF";
     }
 
     function updateWinLossAccuracy() {
